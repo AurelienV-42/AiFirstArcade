@@ -199,7 +199,9 @@ struct RepeatButton: View {
             repeater?.cancel()
             repeater = nil
             guard pressed else { return }
+            action()
             repeater = Task { @MainActor in
+                try? await Task.sleep(nanoseconds: 350_000_000)
                 while !Task.isCancelled {
                     action()
                     try? await Task.sleep(nanoseconds: 230_000_000)
